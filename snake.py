@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """
+
 Created on Sun Jul  1 23:58:42 2018
 
 Snake Mini project Starter Code
@@ -75,40 +76,42 @@ LEFT = 1
 RIGHT = 2
 DOWN = 3
 direction = UP
+UP_EDGE = 250
+DOWN_EDGE = -250
+RIGHT_EDGE = 400
+LEFT_EDGE = -400
+
 
 def up():
     global direction #snake direction is global (same everywhere)
     direction=UP #Change direction to up
-    move_snake() #Update the snake drawing <- remember me later
+    #Update the snake drawing <- remember me later
     print("You pressed the up key!")
-
+turtle.onkey(up, 'Up')
 #2. Make functions down(), left(), and right() that change direction
 ####WRITE YOUR CODE HERE!!
 
 def down():
+    global direction
     print('you pressed the down key.')
-    move_snake()
     direction=DOWN
 turtle.onkey(down, 'Down')
-turtle.listen()
-LEFT = 2
+
+
 def left():
+    global direction
     print('you pressed the left key.')
-    move_snake()
     direction=LEFT
 turtle.onkey(left, 'Left')
-turtle.listen()
 
-RIGHT = 3
+
 def right():
+    global direction
     print('you pressed the right key.')
-    move_snake()
     direction=RIGHT
-    
 turtle.onkey(right, 'Right')
 turtle.listen()
-
-turtle.onkeypress(up, UP_ARROW) # Create listener for up key
+# Create listener for up key
 
 #3. Do the same for the other arrow keys
 ####WRITE YOUR CODE HERE!!
@@ -119,6 +122,26 @@ def move_snake():
     my_pos = snake.pos()
     x_pos = my_pos[0]
     y_pos = my_pos[1]
+    new_pos = snake.pos()
+    new_x_pos = new_pos[0]
+    new_y_pos = new_pos[1]
+    if new_x_pos >= RIGHT_EDGE:
+        print('you hit the right edge! Game over!')
+        quit()
+    elif new_x_pos <= LEFT_EDGE:
+        print('you hit the right edge! Game over!')
+        quit()
+    elif new_y_pos >= UP_EDGE:
+        print('you hit the upper edge! Game over!')
+        quit()
+    elif new_y_pos <= DOWN_EDGE:
+        print('you hit the upper edge! Game over!')
+        quit()
+    turtle.ontimer(move_snake,1500)
+
+
+    
+   
     
     if direction==RIGHT:
         snake.goto(x_pos + SQUARE_SIZE, y_pos)
@@ -126,7 +149,12 @@ def move_snake():
     elif direction==LEFT:
         snake.goto(x_pos - SQUARE_SIZE, y_pos)
         print("You moved left!")
-
+    elif direction==UP:
+        print('you moved up.')
+        snake.goto(x_pos, y_pos +  SQUARE_SIZE)
+    elif direction==DOWN:
+        snake.goto(x_pos, y_pos - SQUARE_SIZE)
+        print('you moved down.')
     #4. Write the conditions for UP and DOWN on your own
     ##### YOUR CODE HERE
 
@@ -143,3 +171,20 @@ def move_snake():
     old_stamp = stamp_list.pop(0)
     snake.clearstamp(old_stamp)
     pos_list.pop(0)
+
+move_snake()
+
+turtle.register_shape("trash.gif") #Add trash picture
+                      # Make sure you have downloaded this shape 
+                      # from the Google Drive folder and saved it
+                      # in the same folder as this Python script
+
+
+food = turtle.clone()
+food.shape("trash.gif") 
+
+#Locations of food
+food_pos = [(100,100), (-100,100), (-100,-100), (100,-100)]
+food_stamps = []
+
+
