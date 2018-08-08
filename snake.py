@@ -137,9 +137,11 @@ def move_snake():
     elif new_y_pos <= DOWN_EDGE:
         print('you hit the upper edge! Game over!')
         quit()
-    turtle.ontimer(move_snake,1500)
 
+    TIME_STEP = 100
+    turtle.ontimer(move_snake,TIME_STEP)
 
+   
     
    
     
@@ -174,6 +176,8 @@ def move_snake():
 
 move_snake()
 
+
+
 turtle.register_shape("trash.gif") #Add trash picture
                       # Make sure you have downloaded this shape 
                       # from the Google Drive folder and saved it
@@ -188,3 +192,10 @@ food_pos = [(100,100), (-100,100), (-100,-100), (100,-100)]
 food_stamps = []
 
 
+for this_food_pos in food_pos:
+    x_pos = this_food_pos[0]
+    y_pos = this_food_pos[1]
+    turtle.goto(x_pos, y_pos)
+    stamp_id = food.stamp()
+    food_stamps.append(stamp_id)
+    
